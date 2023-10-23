@@ -1,0 +1,8 @@
+﻿  Bank Project.cpp
+F:\route iti\Bank Project\Bank Project\Bank Project.cpp(107,32): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+F:\route iti\Bank Project\Bank Project\Bank Project.cpp(128,40): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+F:\route iti\Bank Project\Bank Project\Bank Project.cpp(139,40): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+F:\route iti\Bank Project\Bank Project\Bank Project.cpp(182,31): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  Person.cpp
+  Generating Code...
+  Bank Project.vcxproj -> F:\route iti\Bank Project\x64\Debug\Bank Project.exe

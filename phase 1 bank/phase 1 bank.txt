@@ -1,0 +1,271 @@
+// Bank Project.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#include <iostream>
+using namespace std;
+class Validation
+{
+	Validation() {
+
+	}
+public:
+	static bool checkName(string name) {
+		if (name.length() >= 5 && name.length() <= 20 && isalpha(name[0])) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	static bool checkPassword(string password) {
+		if (password.length() >= 8 && password.length() <= 20) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	static bool checkBalance(int balance) {
+		if (balance >= 1500) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	static bool checkSalary(int salary) {
+		if (salary >= 5000) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	~Validation() {}
+};
+class Person
+{
+protected:
+	static int id;
+	string name;
+	string password;
+public:
+	Person() {
+		id++;
+	}
+	Person(string name, string password) {
+		this->name = name;
+		this->password = password;
+		id++;
+	}
+	//setters
+	void setName(string name) {
+		if (Validation::checkName(name))
+		{
+			this->name = name;
+		}
+		else {
+			cout << "invalid name.It must be in alphabetic chars within range of 5 to 20  letters" << endl;
+		}
+	}
+
+	void setPassword(string password) {
+		if (Validation::checkPassword(password)) {
+			this->password = password;
+		}
+		else {
+			cout << "invalid password.It must be in range of 8 to 20 char " << endl;
+		}
+
+	}
+	//getters
+	string getName() {
+		return name;
+	}
+	string getPass() {
+		return password;
+	}
+	// 
+	virtual void displayInfo() = 0;
+	~Person() {}
+};
+int Person::id = 0;
+class Client :public Person
+{
+private:
+	double balance;
+public:
+	Client() {
+		balance = 0;
+	}
+	Client(string name, string password, double balance) :Person(name, password) {
+		this->balance = balance;
+	}
+
+	//setters
+	void setBalance(double balance) {
+		if (Validation::checkBalance(balance)) {
+
+			this->balance = balance;
+		}
+		else {
+			cout << "Invalid balance. Minimum balance is 1500" << endl;
+		}
+	}
+	//getters
+	double getBalance() {
+		return balance;
+	}
+	//deposit        
+	void deposit(double amount) {
+		balance += amount;
+		cout << "depositing is done successfully , your balance now is : $ " << balance << endl;
+	}
+
+	//withdraw
+
+	void withdraw(double amount) {
+		if (Validation::checkBalance(balance - amount)) {
+			balance -= amount;
+			cout << "Withdrawing is done successfully, your balance now is : $ " << balance << endl;
+		}
+		else {
+			cout << "Insufficient balance. Minimum balance is 1500" << endl;
+		}
+	}
+	//transferring
+	void transferTo(double amount, Client& recipient) {
+
+		if (Validation::checkBalance(balance - amount)) {
+			balance -= amount;
+			recipient.deposit(amount);
+			cout << "Transferring is done successfully, your balance now is : $  " << balance << endl;
+		}
+		else {
+			cout << "Transferring is rejected.Insufficient balance." << endl << "Minimum balance is 1500" << endl;
+		}
+	}
+
+	//checking the balance
+
+	void checkBalance() {
+		cout << "your current balance is :  $ " << balance << endl;
+	}
+
+	//dispInfo info
+
+	void displayInfo() {
+		cout << "name : " << name << endl;
+		cout << "id : " << id << endl;
+		cout << "password : " << password << endl;
+		cout << "balance : $ " << balance << endl;
+	}
+
+	~Client() {
+
+	}
+
+};
+class Employee :public Person
+{
+protected:
+	double salary;
+public:
+	Employee() {
+		salary = 0;
+	}
+	Employee(string name, string password, double salary) :Person(name, password) {
+		this->salary = salary;
+	}
+	//setters
+	void setSalary(double salary) {
+		if (Validation::checkSalary(salary)) {
+
+			this->salary = salary;
+		}
+		else {
+			cout << "Invalid salary. Minimum balance is 5000" << endl;
+		}
+	}
+	//getters
+	double getSalary() {
+		return salary;
+	}
+	void displayInfo() {
+		cout << "hello Employee" << endl;
+		cout << "name : " << name << endl;
+		cout << "id : " << id << endl;
+		cout << "password : " << password << endl;
+		cout << "balance : $ " << salary << endl;
+	}
+	~Employee() {}
+};
+class Admin :public Employee
+{
+public:
+	Admin() {
+		salary = 0;
+	}
+	Admin(string name, string password, double salary) :Employee(name, password, salary) {
+
+	}
+	void displayInfo() {
+		cout << "hello Admin" << endl;
+		cout << "name : " << name << endl;
+		cout << "id : " << id << endl;
+		cout << "password : " << password << endl;
+		cout << "balance : $ " << salary << endl;
+	}
+	~Admin() {}
+};
+int main()
+{
+	Admin a1;
+	a1.setName("amr amr");
+	a1.setPassword("2213faqwwwad");
+	a1.setSalary(15999);
+	a1.displayInfo();
+	cout << "\n---------------------------\n";
+	Employee e1;
+	e1.setName("ali amr");
+	e1.setPassword("21321sdfaad");
+	e1.setSalary(13999);
+	//e1.setSalary(3999);
+	e1.displayInfo();
+
+	Client c1;
+	c1.setName("abdoe");
+	c1.setPassword("weqsdaddr2");
+	c1.setBalance(2345);
+
+	c1.setName("abdoe");
+	c1.setPassword("weqr2");
+	c1.setBalance(2345);
+
+	Client c2("ali", "we23qq14", 2000);
+	c1.displayInfo();
+	c2.displayInfo();
+	cout << "\n---------------------------\n";
+	c1.transferTo(2000, c2);
+	c1.displayInfo();
+	c2.displayInfo();
+
+	/*Person p("ali", "2313d");
+	p.displayInfo();
+	if (Validation::checkName("fasd22sa"))
+	{
+		cout << "sdasasd" << endl;
+	}
+	else
+	{
+		cout << "000000000" << endl;
+	}
+	if (Validation::checkPassword("fasa"))
+	{
+		cout << "sdasasd" << endl;
+	}
+	else
+	{
+		cout << "000000000" << endl;
+	}*/
+}
